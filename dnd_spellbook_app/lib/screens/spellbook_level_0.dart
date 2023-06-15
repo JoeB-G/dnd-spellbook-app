@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class Spellbook0 extends StatefulWidget {
   const Spellbook0({super.key});
@@ -12,8 +10,10 @@ class Spellbook0 extends StatefulWidget {
 class _Spellbook0State extends State<Spellbook0> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: ,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Level 0 spells'),
+      ),
     );
   }
 }
