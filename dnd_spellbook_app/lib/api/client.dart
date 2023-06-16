@@ -1,3 +1,4 @@
+import 'package:dnd_spellbook_app/models/spells.dart';
 import 'package:http/http.dart' as http;
 
 const String baseUrl = 'https://www.dnd5eapi.co/api';
@@ -11,7 +12,11 @@ class BaseClient {
     var response = await client.get(url);
 
     if (response.statusCode == 200) {
-      return response.body;
-    } else {}
+      print("got the data idjut");
+      return spellsFromJson(response.body);
+    } else {
+      print("didnt get data idjur");
+      throw Exception("failed to fetch API data");
+    }
   }
 }

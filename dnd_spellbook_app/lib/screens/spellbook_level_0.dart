@@ -1,3 +1,4 @@
+import 'package:dnd_spellbook_app/widgets/spell_widget.dart';
 import 'package:flutter/material.dart';
 
 class Spellbook0 extends StatefulWidget {
@@ -14,6 +15,7 @@ class _Spellbook0State extends State<Spellbook0> {
       appBar: AppBar(
         title: const Text('Level 0 spells'),
       ),
+      body: const SpellWidget(),
     );
   }
 }

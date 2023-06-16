@@ -32,14 +32,14 @@ class Spells {
 }
 
 class Result {
-  String? index;
-  String? name;
-  String? url;
+  String index;
+  String name;
+  String url;
 
   Result({
-    this.index,
-    this.name,
-    this.url,
+    required this.index,
+    required this.name,
+    required this.url,
   });
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
