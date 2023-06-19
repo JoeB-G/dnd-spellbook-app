@@ -16,16 +16,24 @@ class _SpellWidgetState extends State<SpellWidget> {
   void initState() {
     super.initState();
     BaseClient()
-        .get('/classes/wizard/levels/7/spells')
-        .then((data) => {print(data), setState(() => spellsLevel0 = data)});
+        .get('/classes/wizard/levels/0/spells')
+        .then((data) => {setState(() => spellsLevel0 = data)});
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(itemBuilder: (context, index) {
-      return ListTile(
-        title: Text(spellsLevel0!.results![index].name),
+    if (spellsLevel0 != null) {
+      return ListView.builder(
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(spellsLevel0!.results![index].name),
+          );
+        },
+        itemCount: spellsLevel0?.count,
       );
-    });
+    } else {
+      return const SizedBox(
+          width: 60, height: 60, child: CircularProgressIndicator());
+    }
   }
 }
