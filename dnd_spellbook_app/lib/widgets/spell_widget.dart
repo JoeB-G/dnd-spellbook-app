@@ -26,6 +26,8 @@ class _SpellWidgetState extends State<SpellWidget> {
       return ListView.builder(
         itemBuilder: (context, index) {
           return ListTile(
+            leading: Image.asset(
+                "spellicons/${spellsLevel0!.results![index].index}.png"),
             title: Text(spellsLevel0!.results![index].name),
           );
         },
