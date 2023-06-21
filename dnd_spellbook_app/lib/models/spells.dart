@@ -9,12 +9,12 @@ Spells spellsFromJson(String str) => Spells.fromJson(json.decode(str));
 String spellsToJson(Spells data) => json.encode(data.toJson());
 
 class Spells {
-  int? count;
-  List<Result>? results;
+  int count;
+  List<Result> results;
 
   Spells({
-    this.count,
-    this.results,
+    required this.count,
+    required this.results,
   });
 
   factory Spells.fromJson(Map<String, dynamic> json) => Spells(
@@ -26,7 +26,7 @@ class Spells {
   Map<String, dynamic> toJson() => {
         "count": count,
         "results": results != null
-            ? List<dynamic>.from(results!.map((x) => x.toJson()))
+            ? List<dynamic>.from(results.map((x) => x.toJson()))
             : [],
       };
 }

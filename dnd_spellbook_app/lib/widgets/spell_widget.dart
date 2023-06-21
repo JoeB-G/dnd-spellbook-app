@@ -10,32 +10,34 @@ class SpellWidget extends StatefulWidget {
 }
 
 class _SpellWidgetState extends State<SpellWidget> {
-  Spells? spellsLevel0;
+  late Future<Spells> _data;
 
   @override
   void initState() {
     super.initState();
-    BaseClient()
-        .get('/classes/wizard/levels/0/spells')
-        .then((data) => {setState(() => spellsLevel0 = data)});
+    _data = BaseClient().get('/classes/wizard/levels/0/spells');
   }
 
   @override
   Widget build(BuildContext context) {
-    if (spellsLevel0 != null) {
-      return ListView.builder(
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: Image.asset(
-                "spellicons/${spellsLevel0!.results![index].index}.png"),
-            title: Text(spellsLevel0!.results![index].name),
-          );
-        },
-        itemCount: spellsLevel0?.count,
-      );
-    } else {
-      return const SizedBox(
-          width: 60, height: 60, child: CircularProgressIndicator());
-    }
+    return FutureBuilder(
+        future: _data,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            final Spells data = snapshot.data as Spells;
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                return ListTile(
+                    leading: Image.asset(
+                        "spellicons/${data.results[index].index}.png"),
+                    title: Text(data.results[index].name),
+                    onTap: () {});
+              },
+              itemCount: data.count,
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        });
   }
 }
