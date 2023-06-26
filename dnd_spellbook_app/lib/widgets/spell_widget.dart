@@ -27,11 +27,16 @@ class _SpellWidgetState extends State<SpellWidget> {
             final Spells data = snapshot.data as Spells;
             return ListView.builder(
               itemBuilder: (context, index) {
-                return ListTile(
-                    leading: Image.asset(
-                        "spellicons/${data.results[index].index}.png"),
-                    title: Text(data.results[index].name),
-                    onTap: () {});
+                return ExpansionTile(
+                  leading: Image.asset(
+                      "spellicons/${data.results[index].index}.png"),
+                  title: Text(data.results[index].name),
+                  children: [
+                    ListTile(
+                      title: Text("this is tile $index"),
+                    )
+                  ],
+                );
               },
               itemCount: data.count,
             );
