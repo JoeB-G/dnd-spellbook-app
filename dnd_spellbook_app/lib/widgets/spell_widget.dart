@@ -1,6 +1,6 @@
-import 'package:dnd_spellbook_app/api/client.dart';
-import 'package:dnd_spellbook_app/models/spells.dart';
 import 'package:flutter/material.dart';
+
+import '../spell_data.dart';
 
 class SpellWidget extends StatefulWidget {
   const SpellWidget({super.key});
@@ -10,32 +10,23 @@ class SpellWidget extends StatefulWidget {
 }
 
 class _SpellWidgetState extends State<SpellWidget> {
-  Spells? spellsLevel0;
-
-  @override
-  void initState() {
-    super.initState();
-    BaseClient()
-        .get('/classes/wizard/levels/0/spells')
-        .then((data) => {setState(() => spellsLevel0 = data)});
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (spellsLevel0 != null) {
-      return ListView.builder(
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: Image.asset(
-                "spellicons/${spellsLevel0!.results![index].index}.png"),
-            title: Text(spellsLevel0!.results![index].name),
-          );
-        },
-        itemCount: spellsLevel0?.count,
-      );
-    } else {
-      return const SizedBox(
-          width: 60, height: 60, child: CircularProgressIndicator());
-    }
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return ExpansionTile(
+          leading:
+              Image.asset("spellicons/${spellData[index]["assetName"]}.png"),
+          title: Text(spellData[index]["name"]),
+          children: [
+            ListTile(
+              title: Text("this is tile $index"),
+              subtitle: Text(spellData[index]["description"]),
+            )
+          ],
+        );
+      },
+      itemCount: spellData.length,
+    );
   }
 }
