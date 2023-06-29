@@ -1,6 +1,6 @@
-import 'package:dnd_spellbook_app/api/client.dart';
-import 'package:dnd_spellbook_app/models/spells.dart';
 import 'package:flutter/material.dart';
+
+import '../spell_data.dart';
 
 class SpellWidget extends StatefulWidget {
   const SpellWidget({super.key});
@@ -10,39 +10,23 @@ class SpellWidget extends StatefulWidget {
 }
 
 class _SpellWidgetState extends State<SpellWidget> {
-  late Future<Spells> _data;
-
-  @override
-  void initState() {
-    super.initState();
-    _data = BaseClient().get('/classes/wizard/levels/0/spells');
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: _data,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            final Spells data = snapshot.data as Spells;
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                return ExpansionTile(
-                  leading: Image.asset(
-                      "spellicons/${data.results[index].index}.png"),
-                  title: Text(data.results[index].name),
-                  children: [
-                    ListTile(
-                      title: Text("this is tile $index"),
-                    )
-                  ],
-                );
-              },
-              itemCount: data.count,
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        });
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return ExpansionTile(
+          leading:
+              Image.asset("spellicons/${spellData[index]["assetName"]}.png"),
+          title: Text(spellData[index]["name"]),
+          children: [
+            ListTile(
+              title: Text("this is tile $index"),
+              subtitle: Text(spellData[index]["description"]),
+            )
+          ],
+        );
+      },
+      itemCount: spellData.length,
+    );
   }
 }
